@@ -21,6 +21,7 @@ AddEventHandler('dzp_treasures:setBoxes', function(boxes)
     end
     Citizen.Wait(100)
     Boxes = {}
+    boxObjects = {}
     while ESX == nil do
         Citizen.Wait(100)
     end
@@ -40,8 +41,8 @@ end)
 
 Citizen.CreateThread(function()
     Citizen.Wait(200)
-    local ped = GetPlayerPed(-1)
     while true do
+        local ped = GetPlayerPed(-1)
         Citizen.Wait(0)
         local playerCoords = GetEntityCoords(ped)
         for boxId, box in pairs(Boxes) do
