@@ -9,7 +9,11 @@ function CreateTreasureBox(boxId, coords, contents)
     self.lootBox = function(playerId)
         local xPlayer = ESX.GetPlayerFromId(playerId)
         for item, amount in pairs(self.contents) do
-            xPlayer.addInventoryItem(item, amount)
+            if item == 'black_money' or item == 'money' or item == 'bank' then
+                xPlayer.addAccountMoney(item, amount)
+            else
+                xPlayer.addInventoryItem(item, amount)
+            end
         end
         deleteTreasureBox(self.boxId)
     end

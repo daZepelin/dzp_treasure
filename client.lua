@@ -26,9 +26,7 @@ AddEventHandler('dzp_treasures:setBoxes', function(boxes)
         Citizen.Wait(100)
     end
     Boxes = boxes
-    print('setBoxes')
     for boxId, box in pairs(Boxes) do
-        print(boxId)
         boxCoords = vector3(box.coords.x, box.coords.y, box.coords.z-1)
         ESX.Game.SpawnObject(90805875, boxCoords, function(box)
             table.insert(boxObjects, 1, box)
