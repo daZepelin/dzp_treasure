@@ -4,11 +4,15 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 Boxes = {}
 
 RegisterCommand('addbox', function(source, args)
-    if IsPlayerAceAllowed(source, "acommands") then
+    if IsPlayerAceAllowed(source, "dzp") then
         local items = {}
         local coords = {["x"] = 0.0, ["y"] = 0.0, ["z"] = 0.0}
         for i = 1, #args, 2 do
-            items[ args[i]] = tonumber(args[i+1])
+            if tonumber(args[i+1]) ~= nil then
+                items[ args[i]] = tonumber(args[i+1])
+            else
+                items[ args[i]] = args[i+1]
+            end
         end
         if source ~= -1 then
             local player = source
@@ -55,10 +59,10 @@ AddEventHandler('dzp_treasure:getBoxes', function()
 end)
 
 RegisterNetEvent('dzp_treasure:lootTreasureBox')
-AddEventHandler('dzp_treasure:lootTreasureBox', function(boxId)
+AddEventHandler('dzp_treasure:lootTreasureBox', function(boxId, plate)
     local _source = source
     local box = Boxes[boxId]
-    box.lootBox(_source)
+    box.lootBox(_source, plate)
     TriggerClientEvent('dzp_treasures:setBoxes', -1, Boxes)
 end)
 

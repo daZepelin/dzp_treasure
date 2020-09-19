@@ -16,7 +16,7 @@ end)
 RegisterNetEvent('dzp_treasures:setBoxes')
 AddEventHandler('dzp_treasures:setBoxes', function(boxes)
     for i = 1, #boxObjects do
-        NetworkFadeOutEntity(boxObjects[i], false, false)
+        NetworkFadeOutEntity(boxObjects[i], false, true)
         DeleteObject(boxObjects[i])
     end
     Citizen.Wait(100)
@@ -28,12 +28,18 @@ AddEventHandler('dzp_treasures:setBoxes', function(boxes)
     Boxes = boxes
     for boxId, box in pairs(Boxes) do
         boxCoords = vector3(box.coords.x, box.coords.y, box.coords.z-1)
-        ESX.Game.SpawnObject(90805875, boxCoords, function(box)
+        local hash = 0
+        if box.contents.car == nil then
+            hash = 90805875
+        else
+            hash = box.contents.car
+        end
+        ESX.Game.SpawnObject(hash, boxCoords, function(box)
             table.insert(boxObjects, 1, box)
             FreezeEntityPosition(box, true)
             SetEntityAsMissionEntity(object, true, false)
             SetEntityCollision(box, true, true)
-        end)
+        end, false)
     end
 end)
 
@@ -48,11 +54,18 @@ Citizen.CreateThread(function()
             local dist = #(playerCoords - boxCoords)
             if dist < 100.0 then
                 if dist < 2.5 then
-                    ESX.ShowHelpNotification('You found a treasure. ~INPUT_CONTEXT~ loot it!')
+                    local hash = 0
+                    if box.contents.car == nil then
+                        hash = 90805875
+                        ESX.ShowHelpNotification('You found a treasure. ~INPUT_CONTEXT~ loot it!')
+                    else
+                        hash = box.contents.car
+                        ESX.ShowHelpNotification('You found a car. ~INPUT_CONTEXT~ to collect it if you have it\'s key!')
+                    end
                     if IsControlJustReleased(0, 38) then
-                        TriggerServerEvent('dzp_treasure:lootTreasureBox', boxId)
-                        local box = GetClosestObjectOfType(boxCoords, 1.5, 90805875, false, false, false)
-                        NetworkFadeOutEntity(box, false, false)
+                        TriggerServerEvent('dzp_treasure:lootTreasureBox', boxId, exports['esx_vehicleshop']:GeneratePlate())
+                        local box = GetClosestObjectOfType(boxCoords, 1.5, hash, false, false, false)
+                        NetworkFadeOutEntity(box, false, true)
                         DeleteObject(box)
                     end
                 end
