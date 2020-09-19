@@ -4,7 +4,7 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 Boxes = {}
 
 RegisterCommand('addbox', function(source, args)
-    if IsPlayerAceAllowed(source, "acommands") then
+    if IsPlayerAceAllowed(source, "dzp") then
         local items = {}
         local coords = {["x"] = 0.0, ["y"] = 0.0, ["z"] = 0.0}
         for i = 1, #args, 2 do
