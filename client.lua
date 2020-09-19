@@ -16,7 +16,7 @@ end)
 RegisterNetEvent('dzp_treasures:setBoxes')
 AddEventHandler('dzp_treasures:setBoxes', function(boxes)
     for i = 1, #boxObjects do
-        NetworkFadeOutEntity(boxObjects[i], false, false)
+        NetworkFadeOutEntity(boxObjects[i], false, true)
         DeleteObject(boxObjects[i])
     end
     Citizen.Wait(100)
@@ -39,7 +39,7 @@ AddEventHandler('dzp_treasures:setBoxes', function(boxes)
             FreezeEntityPosition(box, true)
             SetEntityAsMissionEntity(object, true, false)
             SetEntityCollision(box, true, true)
-        end)
+        end, false)
     end
 end)
 
@@ -65,7 +65,7 @@ Citizen.CreateThread(function()
                     if IsControlJustReleased(0, 38) then
                         TriggerServerEvent('dzp_treasure:lootTreasureBox', boxId, exports['esx_vehicleshop']:GeneratePlate())
                         local box = GetClosestObjectOfType(boxCoords, 1.5, hash, false, false, false)
-                        NetworkFadeOutEntity(box, false, false)
+                        NetworkFadeOutEntity(box, false, true)
                         DeleteObject(box)
                     end
                 end
