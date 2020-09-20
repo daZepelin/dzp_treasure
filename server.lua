@@ -66,6 +66,21 @@ AddEventHandler('dzp_treasure:lootTreasureBox', function(boxId, plate)
     TriggerClientEvent('dzp_treasures:setBoxes', -1, Boxes)
 end)
 
+RegisterNetEvent('dzp_treasures:giveVehicleC')
+AddEventHandler('dzp_treasures:giveVehicleC', function(source, model, plate)
+    local xPlayer = ESX.GetPlayerFromId(source)
+        TriggerEvent('serverlog', "Žaidėjas " .. GetPlayerIdentifier(source) .. " gavo automobilį " .. model .. " su numeriais: " .. plate)
+        MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)', {
+            ['@owner'] = xPlayer.identifier,
+            ['@plate'] = plate,
+            ['@vehicle'] = json.encode({model = GetHashKey(model), plate = plate}),
+            ['@type'] = 'car'
+        }, function(rowsChanged)
+            TriggerClientEvent('goto:notify', source, {'', 'Automobilis pastatytas į Jūsų garažą', 'info'})
+            --xPlayer.showNotification(_U('car_belongs', plate))
+        end)
+end)
+
 function addTreasureBox(coords, contents)
     MySQL.Async.insert('INSERT INTO treasure_boxes (coords, contents) VALUES (@coords, @contents)', {
         ['coords'] = json.encode(coords),

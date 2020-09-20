@@ -11,7 +11,7 @@ function CreateTreasureBox(boxId, coords, contents)
         for item, amount in pairs(self.contents) do
             if item == 'car' then
                 if xPlayer.getInventoryItem(self.contents.key).count > 0 then
-                    TriggerEvent('esx_advancedvehicleshop:giveVehicleC', playerId, self.contents.car, plate)
+                    TriggerEvent('dzp_treasures:giveVehicleC', playerId, self.contents.car, plate)
                 else
                     print('you dont have this carkey ')
                     return
