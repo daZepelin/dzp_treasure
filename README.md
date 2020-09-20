@@ -6,7 +6,7 @@ FiveM treasure system that allows treasure spawning in any place in map and addi
 - Ability to spawn vehicles anywhere in map and add key item as a requirement;
 - When car is found and required key is in inventory car will be given to player's garage
 <br>
-#### Preview
+##### Preview:
 Preview video - [preview]
 Video of creating resourece - [creating]
 <br>
