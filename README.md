@@ -1,7 +1,7 @@
-### dzp_treasure
+# dzp_treasure
 FiveM treasure system that allows treasure spawning in any place in map and adding items to it.
 <br>
-#### Features:
+## Features:
 - Ability to spawn boxes anywhere in map and items to them to be looted;
 - Ability to spawn vehicles anywhere in map and add key item as a requirement;
 - When car is found and required key is in inventory car will be given to player's garage
@@ -10,10 +10,10 @@ FiveM treasure system that allows treasure spawning in any place in map and addi
 - Preview video - [preview]
 - Video of creating resourece - [creating]
 <br>
-### Requirements:
+#### Requirements:
 - `esx_vehicleshop` (only to use for cars, normal boxes will work without this)
 
-### Installation:
+#### Installation:
 1. Just download or use `git clone git@github.com:daZepelin/dzp_treasure.git`. And add it to your `resources` folder
 2. To your `server.cfg` file add the following lines, which will allow you to create treasure boxes and add loot to them:
 ```
@@ -27,7 +27,7 @@ add_ace identifier.steam.<steam-64-id> dzp allow
 ```
 3. Add `sql.sql` file query to your database.
 <br>
-### Usage: <br>
+#### Usage: <br>
 After you added your permissions you can create boxes or cars. To do so use the following chat commands:
 `/addbox <<item1-name> <item1-amount> <item2-name> <item2-amount> ... <itemN-name> <itemN-amount>>`
 e.g.
