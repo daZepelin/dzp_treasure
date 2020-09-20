@@ -6,9 +6,9 @@ FiveM treasure system that allows treasure spawning in any place in map and addi
 - Ability to spawn vehicles anywhere in map and add key item as a requirement;
 - When car is found and required key is in inventory car will be given to player's garage
 <br>
-##### Preview:
-Preview video - [preview]
-Video of creating resourece - [creating]
+#### Preview:
+- Preview video - [preview]
+- Video of creating resourece - [creating]
 <br>
 #### Requirements:
 - `esx_vehicleshop` (only to use for cars, normal boxes will work without this)
@@ -27,7 +27,7 @@ add_ace identifier.steam.<steam-64-id> dzp allow
 ```
 3. Add `sql.sql` file query to your database.
 <br>
-#### Usage:
+#### Usage: <br>
 After you added your permissions you can create boxes or cars. To do so use the following chat commands:
 `/addbox <<item1-name> <item1-amount> <item2-name> <item2-amount> ... <itemN-name> <itemN-amount>>`
 e.g.
