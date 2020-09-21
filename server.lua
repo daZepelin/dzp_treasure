@@ -30,10 +30,6 @@ RegisterCommand('addbox', function(source, args)
     end
 end, false)
 
--- RegisterCommand('setboxes', function()
---     TriggerClientEvent('dzp_treasures:setBoxes', -1, Boxes)
--- end)
-
 MySQL.ready(function()
     MySQL.Async.fetchAll('SELECT * FROM treasure_boxes', {}, 
     function(data)
@@ -69,15 +65,13 @@ end)
 RegisterNetEvent('dzp_treasures:giveVehicleC')
 AddEventHandler('dzp_treasures:giveVehicleC', function(source, model, plate)
     local xPlayer = ESX.GetPlayerFromId(source)
-        TriggerEvent('serverlog', "Žaidėjas " .. GetPlayerIdentifier(source) .. " gavo automobilį " .. model .. " su numeriais: " .. plate)
         MySQL.Async.execute('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (@owner, @plate, @vehicle, @type)', {
             ['@owner'] = xPlayer.identifier,
             ['@plate'] = plate,
             ['@vehicle'] = json.encode({model = GetHashKey(model), plate = plate}),
             ['@type'] = 'car'
         }, function(rowsChanged)
-            TriggerClientEvent('goto:notify', source, {'', 'Automobilis pastatytas į Jūsų garažą', 'info'})
-            --xPlayer.showNotification(_U('car_belongs', plate))
+            xPlayer.showNotification('Car was parked to your garage')
         end)
 end)
 
