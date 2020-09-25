@@ -30,6 +30,14 @@ RegisterCommand('addbox', function(source, args)
     end
 end, false)
 
+RegisterCommand('tpbox', function(source, args)
+    if IsPlayerAceAllowed(source, "acommands") then
+        TriggerClientEvent('dzp_treasures:tpToBox', source, Boxes[tonumber(args[1])].coords)
+    else
+        print('permissions not allowed')
+    end
+end, false)
+
 MySQL.ready(function()
     MySQL.Async.fetchAll('SELECT * FROM treasure_boxes', {}, 
     function(data)
