@@ -42,6 +42,12 @@ AddEventHandler('dzp_treasures:setBoxes', function(boxes)
     end
 end)
 
+RegisterNetEvent('dzp_treasures:tpToBox')
+AddEventHandler('dzp_treasures:tpToBox', function(coords)
+    local ped = PlayerPedId()
+    SetEntityCoords(ped, coords.x, coords.y, coords.z, false, false, false, false)
+end)
+
 Citizen.CreateThread(function()
     Citizen.Wait(200)
     while true do
