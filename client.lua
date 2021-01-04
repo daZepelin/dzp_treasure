@@ -13,6 +13,23 @@ AddEventHandler('playerSpawned', function()
     TriggerServerEvent('dzp_treasure:getBoxes')
 end)
 
+function SpawnObject(model, coords, cb, networked)
+    
+	local vector = type(coords) == "vector3" and coords or vec(coords.x, coords.y, coords.z)
+	networked = networked == nil and true or false
+	CreateThread(function()
+		PokerRequestModel(model)
+		
+		-- The below has to be done just for CreateObject since for some reason CreateObjects model argument is set
+		-- as an Object instead of a hash so it doesn't automatically hash the item
+		model = type(model) == 'number' and model or GetHashKey(model)
+		local obj = CreateObject(model, vector.xyz, networked, false, true)
+		if cb then
+			cb(obj)
+		end
+	end)
+end
+
 RegisterNetEvent('dzp_treasures:setBoxes')
 AddEventHandler('dzp_treasures:setBoxes', function(boxes)
     for i = 1, #boxObjects do
@@ -33,7 +50,7 @@ AddEventHandler('dzp_treasures:setBoxes', function(boxes)
         else
             hash = box.contents.car
         end
-        ESX.Game.SpawnObject(hash, boxCoords, function(box)
+        SpawnObject(hash, boxCoords, function(box)
             table.insert(boxObjects, 1, box)
             FreezeEntityPosition(box, true)
             SetEntityAsMissionEntity(object, true, false)
