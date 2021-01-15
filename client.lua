@@ -13,12 +13,25 @@ AddEventHandler('playerSpawned', function()
     TriggerServerEvent('dzp_treasure:getBoxes')
 end)
 
+function TreasureRequestModel(model, cb)
+	if not HasModelLoaded(model) and IsModelInCdimage(model) then
+		RequestModel(model)
+		while not HasModelLoaded(model) do
+			Citizen.Wait(0)
+		end
+	end
+
+	if cb ~= nil then
+		cb()
+	end
+end
+
 function SpawnObject(model, coords, cb, networked)
     
 	local vector = type(coords) == "vector3" and coords or vec(coords.x, coords.y, coords.z)
 	networked = networked == nil and true or false
 	CreateThread(function()
-		PokerRequestModel(model)
+		TreasureRequestModel(model)
 		
 		-- The below has to be done just for CreateObject since for some reason CreateObjects model argument is set
 		-- as an Object instead of a hash so it doesn't automatically hash the item
